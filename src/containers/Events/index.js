@@ -48,6 +48,7 @@ const EventList = () => {
             {filteredEvents.map((event) => (
               <Modal key={event.id} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
+                  
                   <EventCard
                     onClick={() => setIsOpened(true)}
                     imageSrc={event.cover}
