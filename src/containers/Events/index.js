@@ -1,42 +1,56 @@
-import { useState } from "react";
-import EventCard from "../../components/EventCard";
-import Select from "../../components/Select";
-import { useData } from "../../contexts/DataContext";
-import Modal from "../Modal";
-import ModalEvent from "../ModalEvent";
+/* eslint-disable import/no-unresolved */
+import { useState } from 'react';
+import EventCard from '../../components/EventCard';
+import Select from '../../components/Select';
+import { useData } from '../../contexts/DataContext';
+import Modal from '../Modal';
+import ModalEvent from '../ModalEvent';
 
-import "./style.css";
+import './style.css';
 
 const PER_PAGE = 9;
 
 const EventList = () => {
   const { data, error } = useData();
-  const [type, setType] = useState();
+  const [type, setType] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const filteredEvents = (
-    (!type
-      ? data?.events
-      : data?.events) || []
-  ).filter((event, index) => {
-    if (
-      (currentPage - 1) * PER_PAGE <= index &&
-      PER_PAGE * currentPage > index
-    ) {
-      return true;
-    }
-    return false;
-  });
+  // Ajout du state filterType
+  const [filterType, setFilterType] = useState(null);
+
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
+    // Ajout du setFilterType lorsque le filtre change
+    setFilterType(evtType);
   };
+
+  // Ajout de sortedEvents pour classer les évenements par date.
+  const sortedEvents = data?.events
+    ? [...data.events].sort(
+        (evtA, evtB) => new Date(evtB.data) - new Date(evtA.data)
+      )
+    : [];
+
+  // Va filter la liste des événements organisée par date, en fonction du type d'event. Initiallement ne filtrait pas en fonction du type d'évenement, mais organisait juste la pagination. Utilisation de [] permet de ne pas renvoyer d'erreur si sortEvent devait renvoyer une valeur autre qu'un tableau qui pourrait ensuite faire bug filter.
+  const filteredEvents = ((!type ? sortedEvents : sortedEvents) || [])
+    .filter((event) => filterType === null || event.type === filterType)
+    .filter((event, index) => {
+      if (
+        (currentPage - 1) * PER_PAGE <= index &&
+        PER_PAGE * currentPage > index
+      ) {
+        return true;
+      }
+      return false;
+    });
+
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
   const typeList = new Set(data?.events.map((event) => event.type));
   return (
     <>
       {error && <div>An error occured</div>}
       {data === null ? (
-        "loading"
+        'loading'
       ) : (
         <>
           <h3 className="SelectTitle">Catégories</h3>
@@ -48,7 +62,6 @@ const EventList = () => {
             {filteredEvents.map((event) => (
               <Modal key={event.id} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
-                  
                   <EventCard
                     onClick={() => setIsOpened(true)}
                     imageSrc={event.cover}
@@ -75,3 +88,5 @@ const EventList = () => {
 };
 
 export default EventList;
+
+  

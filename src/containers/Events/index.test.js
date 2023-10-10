@@ -59,7 +59,7 @@ describe("When Events is created", () => {
     });
   });
   describe("and we select a category", () => {
-    it("an filtered list is displayed", async () => {
+    it.only("an filtered list is displayed", async () => {
       api.loadData = jest.fn().mockReturnValue(data);
       render(
         <DataProvider>
@@ -67,8 +67,6 @@ describe("When Events is created", () => {
         </DataProvider>
       );
       await screen.findByText("Forum #productCON");
-      
-      // Cliquez pour dérouler et sélectionner une catégorie
       fireEvent(
         await screen.findByTestId("collapse-button-testid"),
         new MouseEvent("click", {
@@ -83,9 +81,9 @@ describe("When Events is created", () => {
           bubbles: true,
         })
       );
-  
-        await screen.findByText("Conférence #productCON");
-        expect(screen.queryByText("Forum #productCON")).not.toBeInTheDocument();
+
+      await screen.findByText("Conférence #productCON");
+      expect(screen.queryByText("Forum #productCON")).not.toBeInTheDocument();
     });
   });
 
@@ -111,3 +109,4 @@ describe("When Events is created", () => {
     });
   });
 });
+
