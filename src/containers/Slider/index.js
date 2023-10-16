@@ -10,7 +10,7 @@ const Slider = () => {
   // Initialisation de l'index de la carte actuellement affichée.
   const [index, setIndex] = useState(0);
 
-  // Tri des événements par date décroissante.
+  // Tri des événements par date décroissante en changeant l'orientation du signe.
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
     new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
   );
