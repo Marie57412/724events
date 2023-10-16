@@ -34,12 +34,13 @@ const Slider = () => {
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
+        //déplacement de la key
         <div key={event.title}>
           <div
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
-          >
+          >{/* Ajout d'un alt unique */}
             <img src={event.cover} alt={event.title} />
             <div className="SlideCard__descriptionContainer">
               <div className="SlideCard__description">
@@ -51,11 +52,13 @@ const Slider = () => {
           </div>
           <div className="SlideCard__paginationContainer">
             <div className="SlideCard__pagination">
+              {/* Modification des param et de la key*/}
               {byDateDesc.map((bulletpoint, radioIdx) => (
                 <input
                   key={`${bulletpoint.title}`}
                   type="radio"
                   name="radio-button"
+                  // index à la place de idx 
                   checked={index === radioIdx}
                   readOnly
                 />
