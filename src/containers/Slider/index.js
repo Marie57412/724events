@@ -34,7 +34,7 @@ const Slider = () => {
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
-        //déplacement de la key
+        // déplacement de la key
         <div key={event.title}>
           <div
             className={`SlideCard SlideCard--${
@@ -52,7 +52,7 @@ const Slider = () => {
           </div>
           <div className="SlideCard__paginationContainer">
             <div className="SlideCard__pagination">
-              {/* Modification des param et de la key*/}
+              {/* Modification des param et de la key */}
               {byDateDesc.map((bulletpoint, radioIdx) => (
                 <input
                   key={`${bulletpoint.title}`}
