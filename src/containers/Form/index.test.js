@@ -9,7 +9,7 @@ describe("When Events is created", () => {
     await screen.findByText("Prénom");
     
     await screen.findByText("Personnel / Entreprise");
-  });
+  }); // modif ortographe
 
   describe("and a click is triggered on the submit button", () => {
     it("the success action is called", async () => {
